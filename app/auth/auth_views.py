@@ -2,6 +2,7 @@ from flask import Blueprint, request, session
 from utils.response import bad_request, good_request, server_error, not_found, unauthorized
 from decouple import config
 from utils.token import gen_token
+from middlewares.auth import protectedMiddleware
 
 
 
@@ -46,6 +47,7 @@ dummy_users = [
 
 
 @auth_blueprint.get("/<id>")
+@protectedMiddleware
 def get_admin(id : str):
     try:
         user =  get_user(id)
@@ -66,7 +68,7 @@ def login():
         if user:
             token = gen_token(user)
             session["token"] = token
-            return good_request({"user": user, "token": token})
+            return good_request({"user": user})
         return bad_request("Invalid email or password")
     except Exception as e:
         if isinstance(e, KeyError):
@@ -79,7 +81,9 @@ def register():
     try:
         data = request.get_json()
         email, username, password = data["email"], data["username"], data["password"]
-        print(email, username, password)
+        # admin = Admin(email=email, username=username, password=password, id=1)
+        # db.session.add(admin)
+        # db.session.commit()
         return "Registered!"
     except Exception as e:
         print(e)

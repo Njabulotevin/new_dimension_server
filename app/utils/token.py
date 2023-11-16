@@ -3,7 +3,6 @@ import datetime
 import jwt
 
 
-
 def gen_token(data):
     secret = config("SECRET_KEY")
     payload = {"user": data, "exp":  datetime.datetime.utcnow() + datetime.timedelta(hours=3)}
