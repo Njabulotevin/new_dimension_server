@@ -7,8 +7,8 @@ POST http://127.0.0.1:5000/admin/login HTTP/1.1
 content-type: application/json
 
 {
- "email": "user1@example.com",
-"password": "password1"
+ "email": "user3@example.com",
+ "password": "password3"
 }
 
 ### register
@@ -17,8 +17,8 @@ POST http://127.0.0.1:5000/admin/register HTTP/1.1
 content-type: application/json
 
 {
- "email": "user1@example.com",
-"password": "password1",
+ "email": "user8@example.com",
+"password": "password6",
 "username": "test user"
 }
 

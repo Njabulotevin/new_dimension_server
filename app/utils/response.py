@@ -1,10 +1,9 @@
 
 
-def bad_request(message):
+def bad_response(message):
     return ({"status": 400, "message": message}, 400)
 
-
-def good_request(data):
+def good_response(data):
     return  ({"status": 200, "data": data}, 200)
 
 def unauthorized():
