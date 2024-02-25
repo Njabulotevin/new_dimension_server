@@ -1,0 +1,34 @@
+GET http://127.0.0.1:5000/church HTTP/1.1
+
+
+### register
+
+POST http://127.0.0.1:5000/church/register HTTP/1.1
+content-type: application/json
+Cookie: session=2ac3b774-e75c-4db4-926f-9c4da1be5e25; HttpOnly; Path=/
+
+{
+    "name": "Community Church",
+    "denomination": "Non-denominational",
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "country": "USA",
+        "postal_code": "12345"
+    },
+    "contact": {
+        "phone": "555-1234",
+        "email": "info@communitychurch.com",
+        "website": "http://www.communitychurch.com"
+    },
+    "services": [
+        {"day": "Sunday", "time": "10:00 AM"},
+        {"day": "Wednesday", "time": "7:00 PM"}
+    ],
+    "about": "Welcome to Community Church...",
+    "image_url": "http://www.communitychurch.com/logo.png",
+    "admins": [],
+    "members": []
+}
+
