@@ -2,13 +2,29 @@ from database.db_conn import get_database
 from user.userModel import User
 from church.churchModel import Church
 from bson import ObjectId
+from enum import Enum
 
 
-class DB_Collection():
+class UpdateOperation(Enum):
+    PUSH = "$push"
+    ADD_TO_SET = "$addToSet"
+    PULL = "$pull"
+    PULL_ALL = "$pullAll"
+    POP = "$pop"
+    INC = "$inc"
+    MUL = "$mul"
+    MIN = "$min"
+    MAX = "$max"
+    SET = "$set"
+    UNSET = "$unset"
+
+
+class DB_Collection:
     def __init__(self, collection_name):
         connect_db = get_database()
         self.db = connect_db["new_dimension"]
         self.collection = self.db[collection_name]
+
 
 class ChurchDB(DB_Collection):
     def __init__(self):
@@ -16,11 +32,25 @@ class ChurchDB(DB_Collection):
 
     def insert(self, church_data):
         # Validate church data
-        if not all(key in church_data for key in ("name", "denomination", "address", "contact", "services", "creator")):
+        if not all(
+            key in church_data
+            for key in (
+                "name",
+                "denomination",
+                "address",
+                "contact",
+                "services",
+                "creator",
+            )
+        ):
             raise ValueError("Required fields missing in church data.")
 
         # Ensure address, contact, and services are dictionaries
-        if not isinstance(church_data["address"], dict) or not isinstance(church_data["contact"], dict) or not isinstance(church_data["services"], list):
+        if (
+            not isinstance(church_data["address"], dict)
+            or not isinstance(church_data["contact"], dict)
+            or not isinstance(church_data["services"], list)
+        ):
             raise ValueError("Invalid data types for address, contact, or services.")
 
         # Ensure each service has required fields
@@ -33,8 +63,31 @@ class ChurchDB(DB_Collection):
         return Church.serialize_church(self.find_by_id(church_id))
 
     def find_by_id(self, id):
-        user = self.collection.find_one({"_id": ObjectId(id)})
-        return Church.serialize_church(user)
+        church = self.collection.find_one({"_id": ObjectId(id)})
+        return Church.serialize_church(church)
+
+    def find_all(self):
+        churches = self.collection.find()
+        return Church.serialize_churches(churches)
+
+    def update_one(self, filter_criteria, operation: UpdateOperation, key, data):
+        try:
+            update_data = {operation.value: {key: data}}
+            self.collection.update_one(filter_criteria, update_data)
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def update_list(self, filter_criteria, operation: UpdateOperation, key, data):
+        try:
+            update_data = {operation.value: {key:  data}}
+            results = self.collection.update_one(filter_criteria, update_data)
+            return results.modified_count
+        except Exception as e:
+            print(e)
+            return 0
+
 
 class UserDB(DB_Collection):
     def __init__(self):
@@ -42,25 +95,25 @@ class UserDB(DB_Collection):
 
     def insert(self, item):
         user_id = self.collection.insert_one(item).inserted_id
-        user = self.collection.find_one({"_id":user_id})
+        user = self.collection.find_one({"_id": user_id})
         return User.serialize_user_db(user)
 
     def find_all(self):
         users = User.serialize_users_db(self.collection.find())
         return users
-      
-    def find_by_id(self, id : str):
+
+    def find_by_id(self, id: str):
         user = self.collection.find_one({"_id": ObjectId(id)})
         return User.serialize_user_db(user)
 
     def find_by_query(self, query):
         user = self.collection.find_one(query)
         return User.serialize_user_db(user)
-       
 
-def delete_item(id:str):
+
+def delete_item(id: str):
     pass
 
 
-def update_item(id:str):
+def update_item(id: str):
     pass

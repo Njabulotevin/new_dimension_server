@@ -11,6 +11,7 @@ from database.database import UserDB
 
 
 
+
 user_bp = Blueprint("user", __name__, url_prefix='/user')
 
 @user_bp.get("/<id>")
@@ -28,7 +29,6 @@ def login():
     try:
         data = request.get_json()
         email, password = data["email"], data["password"]
-
         user = is_valid_user(email, password)
         if user:
             token = gen_token(user)

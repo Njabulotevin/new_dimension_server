@@ -5,8 +5,10 @@ from utils.response import unauthorized
 
 def protectedMiddleware(fn):
     def wrapper(*args, **kwargs):
+        print("Is there a token? ", "token" in session)
         if "token" in session:
             token = session["token"]
+            print("is valid token: ", is_valid_token(token))
             if not token or not is_valid_token(token):
                 return unauthorized()
         else:
