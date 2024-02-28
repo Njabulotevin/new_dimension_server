@@ -1,5 +1,6 @@
 from enum import Enum
-
+from marshmallow import Schema, fields
+from bson import ObjectId
 
 class Role(Enum):
     ADMIN = 'admin'
@@ -43,3 +44,15 @@ class Member():
     @classmethod
     def serialize_members(cls, members):
         return [cls.serialize_member(member) for member in members]
+
+
+
+class MemberSchema(Schema):
+    user_id = fields.Str(required=True)
+    church_id = fields.Str(required=True)
+
+
+class MemberRoleSchema(Schema):
+    user_id = fields.Str(required=True)
+    church_id = fields.Str(required=True)
+    role = fields.Enum(Role, required=True)

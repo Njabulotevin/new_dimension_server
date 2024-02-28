@@ -1,19 +1,25 @@
 
 @SERVER_URL = http://127.0.0.1:5000
-@COOKIE = 62b38473-5875-4f17-8440-5c493f5c7574;
+@COOKIE = jAVPYx_pqxqRaKPOgEsoTCV2fAQKj9OAceus_B651Dw;
 
 
-### Add members to a church - church Id
+### Add members to a church 
 
-POST {{SERVER_URL}}/members/65df0781fc87ea59fa235e06 HTTP/1.1
+POST {{SERVER_URL}}/members HTTP/1.1
 content-type: application/json
 Cookie: session={{COOKIE}} HttpOnly; Path=/
 
-{"member": "65def18ad82cccb20f68e155"}
+{"user_id": "65def18ad82cccb20f68e155", "church_id": "65df827524d6b2674d7137f2"}
 
 ### Get Church members - church Id
 
 GET {{SERVER_URL}}/members/65df0a024627456fdff40ff5 HTTP/1.1
 
 
+### change member role 
 
+PATCH {{SERVER_URL}}/members HTTP/1.1
+content-type: application/json
+Cookie: session={{COOKIE}} HttpOnly; Path=/
+
+{"user_id": "65def18ad82cccb20f68e155", "church_id": "65df827524d6b2674d7137f2", "role": "MEMBER"}

@@ -8,12 +8,17 @@ from utils.response import (
 )
 from utils.token import decode_token
 from middlewares.auth import protectedRoute
-from .churchModel import Church
+from .churchModel import Church, ChurchSchema
 from ..member.memberModel import Role
 from .churchDAO import ChurchDAO
 from ..member.memberDAO import MemberDAO
+from marshmallow import ValidationError
+from .churchService import church_name_exist
 
 church_bp = Blueprint("church", __name__, url_prefix="/church")
+
+church_schema = ChurchSchema()
+churchDAO = ChurchDAO()
 
 
 @church_bp.get("/")
@@ -38,23 +43,25 @@ def get_churches():
 @protectedRoute
 def register_church():
     try:
-        data = request.get_json()
+        data = church_schema.load(request.json)
         user = decode_token(session.get("token")).get("user")
+        if church_name_exist(data["name"], churchDAO):
+            raise ValidationError("Church name already exist!")
+            
         created_church = Church.create_church(data, user.get("_id"))
-        # created_church.members = [Member.create_member(user, Role.ADMIN)]
-        res = ChurchDAO().insert(created_church.to_dict())
+        res = churchDAO.insert(created_church.to_dict())
         member = MemberDAO().insert(
             {"church_id": res["_id"], "user_id": user.get("_id"), "role": Role.ADMIN.value})
         return good_response(res)
-    except Exception as e:
+    except ValidationError as e:
         print(e)
-        return server_error()
+        return bad_response(e.messages)
 
 
 @church_bp.get("/<id>")
 def get_church(id: str):
     try:
-        church = ChurchDAO().find_by_id(id)
+        church = churchDAO.find_by_id(id)
         return good_response(church)
     except Exception as e:
         print(e)
