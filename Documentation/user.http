@@ -1,3 +1,7 @@
+@SERVER_URL = http://127.0.0.1:5000
+@COOKIE = 62b38473-5875-4f17-8440-5c493f5c7574;
+
+
 GET http://127.0.0.1:5000/user/65db287e7d2acc50956ef554 HTTP/1.1
 # Cookie: session=da8591ff-a3ec-4d74-a7fd-157d64173608; HttpOnly; Path=/
 
@@ -6,16 +10,16 @@ GET http://127.0.0.1:5000/user/65db287e7d2acc50956ef554 HTTP/1.1
 POST http://127.0.0.1:5000/user/login HTTP/1.1
 content-type: application/json
 
-{
- "email": "user3@example.com",
- "password": "12345678"
-}
-
-
 # {
-#  "email": "user1@example.com",
-#  "password": "kevin_test"
+#  "email": "user3@example.com",
+#  "password": "12345678"
 # }
+
+
+{
+ "email": "user1@example.com",
+ "password": "kevin_test"
+}
 
 ### register
 
