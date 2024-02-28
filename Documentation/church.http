@@ -1,3 +1,7 @@
+@SERVER_URL = http://127.0.0.1:5000
+@COOKIE = 62b38473-5875-4f17-8440-5c493f5c7574;
+
+
 
 ### get all churches
 GET http://127.0.0.1:5000/church HTTP/1.1
