@@ -1,14 +1,21 @@
+
+### get all churches
 GET http://127.0.0.1:5000/church HTTP/1.1
+
+
+### get church by ID
+
+GET http://127.0.0.1:5000/church/65ddfb544c05a82c93084bf3 HTTP/1.1
 
 
 ### register
 
 POST http://127.0.0.1:5000/church/register HTTP/1.1
 content-type: application/json
-Cookie: session=2ac3b774-e75c-4db4-926f-9c4da1be5e25; HttpOnly; Path=/
+Cookie: session=b0cef75d-5664-428e-a826-e546d83599d2; HttpOnly; Path=/
 
 {
-    "name": "Community Church",
+    "name": "New Dimension",
     "denomination": "Non-denominational",
     "address": {
         "street": "123 Main St",
@@ -19,16 +26,16 @@ Cookie: session=2ac3b774-e75c-4db4-926f-9c4da1be5e25; HttpOnly; Path=/
     },
     "contact": {
         "phone": "555-1234",
-        "email": "info@communitychurch.com",
-        "website": "http://www.communitychurch.com"
+        "email": "info@newdimension.com",
+        "website": "http://www.newdimension.com"
     },
     "services": [
         {"day": "Sunday", "time": "10:00 AM"},
         {"day": "Wednesday", "time": "7:00 PM"}
     ],
-    "about": "Welcome to Community Church...",
-    "image_url": "http://www.communitychurch.com/logo.png",
-    "admins": [],
-    "members": []
+    "about": "Welcome to New Dimension...",
+    "image_url": "http://www.newdimension.com/logo.png"
 }
+
+
 

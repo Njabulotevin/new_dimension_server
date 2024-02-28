@@ -1,33 +1,6 @@
 import datetime
 from user.userModel import User
-from enum import Enum
 
-
-class Role(Enum):
-    ADMIN = 'admin'
-    MEMBER = 'member'
-    VISITOR = 'visitor'
-    BISHOP = 'bishop'
-    PASTOR = 'pastor'
-    ELDER = 'elder'
-    DEACON = 'deacon'
-    OTHER_LEADER = 'other_leader'
-
-
-class Member():
-    def __init__(self, _id: str, role : Role) -> None:
-        self._id = _id
-        self.role = role
-    
-    def to_dict(self):
-        return {
-            "_id": self._id,
-            "role": self.role.value
-        }
-    @classmethod
-    def create_member(cls, member, role):
-        member = Member(_id=member["_id"], role=role)
-        return member.to_dict()
 
 class Address:
     def __init__(self, street, city, province, country, postal_code):
@@ -60,6 +33,7 @@ class Contact:
             "website": self.website
         }
 
+
 class Service:
     def __init__(self, day, time):
         self.day = day
@@ -73,7 +47,7 @@ class Service:
 
 
 class Church():
-    def __init__(self, name ,denomination, address : Address, contact : Contact, services : Service, about, image_url, members : list[Member], followers_count=0, created_at=None, modified_at=None, creator=None):
+    def __init__(self, name, denomination, address: Address, contact: Contact, services: Service, about, image_url, followers_count=0, created_at=None, modified_at=None, creator=None):
         self.name = name
         self.denomination = denomination
         self.address = address
@@ -81,14 +55,13 @@ class Church():
         self.services = services
         self.about = about
         self.image_url = image_url
-        self.members = members
         self.creator = creator
         self.followers_count = followers_count
         self.created_at = created_at if created_at else datetime.datetime.now()
         self.modified_at = modified_at if modified_at else datetime.datetime.now()
 
     def to_dict(self):
-       return {
+        return {
             "name": self.name,
             "denomination": self.denomination,
             "address": self.address,
@@ -96,30 +69,27 @@ class Church():
             "services": [service for service in self.services],
             "about": self.about,
             "image_url": self.image_url,
-            "members": [member for member in self.members],
             "followers_count": self.followers_count,
             "created_at": self.created_at,
             "modified_at": self.modified_at,
-            "creator" : self.creator
+            "creator": self.creator
         }
-    
+
     @classmethod
     def create_church(self, church, creator):
-        church = Church(name = church["name"], 
-        denomination=church["denomination"], 
-        address=church["address"],
-        contact = dict(church["contact"]),
-        services = list(church["services"]),
-        about = church["about"],
-        image_url=church["image_url"],
-        members=[],
-        followers_count=0, creator=creator)
+        church = Church(name=church["name"],
+                        denomination=church["denomination"],
+                        address=church["address"],
+                        contact=dict(church["contact"]),
+                        services=list(church["services"]),
+                        about=church["about"],
+                        image_url=church["image_url"],
+                        followers_count=0, creator=creator)
         return church
-
 
     @classmethod
     def serialize_church(cls, church):
-         return {
+        return {
             "_id": str(church["_id"]),
             "name": church["name"],
             "denomination": church["denomination"],
@@ -128,11 +98,10 @@ class Church():
             "services": list(church["services"]),
             "about": church["about"],
             "image_url": church["image_url"],
-            "members": church["members"],
             "followers_count": church["followers_count"],
             "created_at": church["created_at"],
             "modified_at": church["modified_at"],
-            "creator" : church["creator"]
+            "creator": church["creator"]
         }
 
     @classmethod
@@ -140,7 +109,4 @@ class Church():
         '''
         Serialize list of church documents from MongoDB
         '''
-        return [cls.serialize_church(church) for church in churches] 
-
-
-        
+        return [cls.serialize_church(church) for church in churches]
