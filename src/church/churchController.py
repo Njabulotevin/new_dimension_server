@@ -7,11 +7,11 @@ from utils.response import (
     unauthorized,
 )
 from utils.token import decode_token
-from middlewares.auth import protectedMiddleware
-from church.churchModel import Church
-from member.memberModel import Role
-from database.database import ChurchDB, MemberDB
-from bson import ObjectId
+from middlewares.auth import protectedRoute
+from .churchModel import Church
+from ..member.memberModel import Role
+from .churchDAO import ChurchDAO
+from ..member.memberDAO import MemberDAO
 
 church_bp = Blueprint("church", __name__, url_prefix="/church")
 
@@ -19,7 +19,7 @@ church_bp = Blueprint("church", __name__, url_prefix="/church")
 @church_bp.get("/")
 def get_churches():
     try:
-        churches = ChurchDB().find_all()
+        churches = ChurchDAO().find_all()
         filter_churces = [
             {
                 "_id": church["_id"],
@@ -35,15 +35,15 @@ def get_churches():
 
 
 @church_bp.post("/register")
-@protectedMiddleware
+@protectedRoute
 def register_church():
     try:
         data = request.get_json()
         user = decode_token(session.get("token")).get("user")
         created_church = Church.create_church(data, user.get("_id"))
         # created_church.members = [Member.create_member(user, Role.ADMIN)]
-        res = ChurchDB().insert(created_church.to_dict())
-        member = MemberDB().insert(
+        res = ChurchDAO().insert(created_church.to_dict())
+        member = MemberDAO().insert(
             {"church_id": res["_id"], "user_id": user.get("_id"), "role": Role.ADMIN.value})
         return good_response(res)
     except Exception as e:
@@ -54,7 +54,7 @@ def register_church():
 @church_bp.get("/<id>")
 def get_church(id: str):
     try:
-        church = ChurchDB().find_by_id(id)
+        church = ChurchDAO().find_by_id(id)
         return good_response(church)
     except Exception as e:
         print(e)
