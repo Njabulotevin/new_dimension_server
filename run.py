@@ -13,7 +13,7 @@ from database.db_conn import get_database
 from user.userModel import User
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
 app.register_blueprint(user_bp)
 app.register_blueprint(church_bp)
