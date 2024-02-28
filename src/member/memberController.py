@@ -7,16 +7,18 @@ from utils.response import (
     unauthorized,
 )
 from utils.token import decode_token
-from middlewares.auth import protectedMiddleware
-from database.database import MemberDB, ChurchDB, UserDB
-from member.memberService import is_admin_member, find_user_by_church
+from middlewares.auth import protectedRoute
+from .memberDAO import MemberDAO
+from ..user.userDAO import UserDAO
+from ..church.churchDAO import ChurchDAO
+from .memberService import is_admin_member, find_user_by_church
 
 
 member_bp = Blueprint("member", __name__, url_prefix="/members")
 
-churchDB = ChurchDB()
-memberDB = MemberDB()
-userDB = UserDB()
+churchDB = ChurchDAO()
+memberDB = MemberDAO()
+userDAO = UserDAO()
 
 
 @member_bp.get("/<church_id>")
@@ -36,14 +38,14 @@ def get_church_members(church_id: str):
 
 
 @member_bp.route("/<church_id>", methods=["POST"])
-@protectedMiddleware
+@protectedRoute
 def add_members(church_id: str):
     try:
         data = request.get_json()
         member = data["member"]
         user = decode_token(session.get("token")).get("user").get("_id")
         church_exit = churchDB.find_by_id(church_id)
-        user_exist = userDB.find_by_id(member)
+        user_exist = userDAO.find_by_id(member)
 
         if not is_admin_member(user, church_id, memberDB):
             return unauthorized()

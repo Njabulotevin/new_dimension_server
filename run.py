@@ -1,16 +1,11 @@
-from flask import Flask, jsonify
-from user.userController import user_bp
-from church.churchController import church_bp
-from member.memberController import member_bp
+from flask import Flask, render_template
+from src.user.userController import user_bp
+from src.church.churchController import church_bp
+from src.member.memberController import member_bp
 from decouple import config
 from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_cors import CORS
-# from models.admin import Admin
-import uuid
-from database.db_conn import get_database
-from user.userModel import User
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
@@ -32,8 +27,8 @@ Session(app)
 
 
 @app.route("/")
-def hello_world():
-    return jsonify({"hello": "world"})
+def index():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":

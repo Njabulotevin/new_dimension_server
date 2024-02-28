@@ -1,5 +1,5 @@
 import datetime
-from user.userModel import User
+from ..user.userModel import User
 
 
 class Address:
