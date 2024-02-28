@@ -12,29 +12,29 @@ GET http://127.0.0.1:5000/church/65ddfb544c05a82c93084bf3 HTTP/1.1
 
 POST http://127.0.0.1:5000/church/register HTTP/1.1
 content-type: application/json
-Cookie: session=b0cef75d-5664-428e-a826-e546d83599d2; HttpOnly; Path=/
+Cookie: session=e4615944-6789-4e3a-a609-a3f9ff11d43e; HttpOnly; Path=/
 
 {
-    "name": "New Dimension",
+    "name": "African Immanuel Church",
     "denomination": "Non-denominational",
     "address": {
-        "street": "123 Main St",
-        "city": "Anytown",
-        "state": "CA",
-        "country": "USA",
-        "postal_code": "12345"
+        "street": "409 Galand Street",
+        "city": "Ermelo",
+        "state": "mpumalanga",
+        "country": "Southa africa",
+        "postal_code": "2351"
     },
     "contact": {
         "phone": "555-1234",
-        "email": "info@newdimension.com",
-        "website": "http://www.newdimension.com"
+        "email": "info@africanimmanuel.com",
+        "website": "http://www.africanimmanuel.com"
     },
     "services": [
         {"day": "Sunday", "time": "10:00 AM"},
         {"day": "Wednesday", "time": "7:00 PM"}
     ],
-    "about": "Welcome to New Dimension...",
-    "image_url": "http://www.newdimension.com/logo.png"
+    "about": "Welcome to African Immanuel Church...",
+    "image_url": "http://www.africanimmanuel.com/logo.png"
 }
 
 
