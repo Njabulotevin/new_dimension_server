@@ -5,14 +5,14 @@ GET http://127.0.0.1:5000/church HTTP/1.1
 
 ### get church by ID
 
-GET http://127.0.0.1:5000/church/65db45ff9359153e97ef2f17 HTTP/1.1
+GET http://127.0.0.1:5000/church/65ddfb544c05a82c93084bf3 HTTP/1.1
 
 
 ### register
 
 POST http://127.0.0.1:5000/church/register HTTP/1.1
 content-type: application/json
-Cookie: session=pBrkZmY4eZ8rpaBLFypjig41iih10xFJPEFuYdeSCuo; HttpOnly; Path=/
+Cookie: session=5f5911b4-7cef-4d22-9a7c-77d36ef853af; HttpOnly; Path=/
 
 {
     "name": "Community Church",
@@ -34,17 +34,8 @@ Cookie: session=pBrkZmY4eZ8rpaBLFypjig41iih10xFJPEFuYdeSCuo; HttpOnly; Path=/
         {"day": "Wednesday", "time": "7:00 PM"}
     ],
     "about": "Welcome to Community Church...",
-    "image_url": "http://www.communitychurch.com/logo.png",
-    "admins": [],
-    "members": []
+    "image_url": "http://www.communitychurch.com/logo.png"
 }
 
 
 
-### Add members to a church
-
-POST http://127.0.0.1:5000/church/members/65ddfb544c05a82c93084bf3 HTTP/1.1
-content-type: application/json
-Cookie: session=pBrkZmY4eZ8rpaBLFypjig41iih10xFJPEFuYdeSCuo; HttpOnly; Path=/
-
-{"members":["1234546", "23456", "123234453", "65db2b198bf35f699cec1312"]}

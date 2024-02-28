@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from user.userController import user_bp
 from church.churchController import church_bp
+from member.memberController import member_bp
 from decouple import config
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -16,6 +17,7 @@ CORS(app, supports_credentials=True)
 
 app.register_blueprint(user_bp)
 app.register_blueprint(church_bp)
+app.register_blueprint(member_bp)
 
 app.config['SECRET_KEY'] = config('SECRET_KEY')
 app.config['DEBUG'] = config('DEBUG', default=False)
@@ -29,13 +31,11 @@ app.config["SESSION_FILE_DIR"] = "./flask_session_cache"
 Session(app)
 
 
-
-
 @app.route("/")
 def hello_world():
-    return jsonify({"hello" : "world"})
+    return jsonify({"hello": "world"})
 
 
 if __name__ == "__main__":
     # with app.app_context():
-        app.run(debug=True)
+    app.run(debug=True)
