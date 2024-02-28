@@ -128,13 +128,19 @@ class MemberDB(DB_Collection):
 
         return None
 
-    def insert(self, item):
-
-        member_id = self.collection.update_one(
+    def insert_set(self, item):
+        member_id = self.collection.insert_one(
             {"user_id": item["user_id"]}, {"$set": item}, upsert=True)
-        # member = self.collection.find_one({"_id": member_id})
-        # return Member.serialize_member(member)
         return {}
+
+    def insert(self, item):
+        try:
+            member_id = self.collection.insert_one(item)
+            member = self.collection.find_one({"_id": member_id})
+            return Member.serialize_member(member)
+        except Exception as e:
+            print(e)
+            return None
 
     def insert_many(self, items):
         member_ids = self.collection.insert_many(items).inserted_ids
