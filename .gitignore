@@ -5,7 +5,6 @@ __pycache__/
 
 
 # Flask
-flask_session_cache
 
 # C extensions
 *.so
