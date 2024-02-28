@@ -71,6 +71,9 @@ class ChurchDB(DB_Collection):
             if church:
                 return Church.serialize_church(church)
             return None
+        except Exception as e:
+            print(e)
+            return None
 
     def find_all(self):
         churches = self.collection.find()
@@ -102,10 +105,14 @@ class MemberDB(DB_Collection):
         super().__init__(collection_name="members")
 
     def find_by_id(self, id):
-        member = self.collection.find_one({"_id": ObjectId(id)})
-        if member:
-            return Member.serialize_member(member)
-        return None
+        try:
+            member = self.collection.find_one({"_id": ObjectId(id)})
+            if member:
+                return Member.serialize_member(member)
+            return None
+        except Exception as e:
+            print(e)
+            return None
 
     def find_by_church(self, church_id):
         members = self.collection.find({"church_id": church_id})
@@ -139,6 +146,13 @@ class MemberDB(DB_Collection):
 
         return Member.serialize_members(members)
 
+    def find_by_query(self, query):
+        try:
+            member = self.collection.find_one(query)
+            return Member.serialize_member(member)
+        except:
+            return None
+
 
 class UserDB(DB_Collection):
     def __init__(self):
@@ -154,10 +168,14 @@ class UserDB(DB_Collection):
         return users
 
     def find_by_id(self, id: str):
-        user = self.collection.find_one({"_id": ObjectId(id)})
-        if user:
-            return User.serialize_user_db(user)
-        return None
+        try:
+            user = self.collection.find_one({"_id": ObjectId(id)})
+            if user:
+                return User.serialize_user_db(user)
+            return None
+        except Exception as e:
+            print(e)
+            return None
 
     def find_by_query(self, query):
         user = self.collection.find_one(query)

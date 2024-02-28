@@ -17,7 +17,7 @@ def good_response(data):
 
 
 def unauthorized():
-    return response({"status": 400, "message": "Unauthorised!"}, 401)
+    return response({"status": 401, "message": "Unauthorised!"}, 401)
 
 
 def not_found(message="Not Found!"):
