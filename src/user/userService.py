@@ -1,9 +1,10 @@
-from utils.response import bad_response, good_response, server_error, not_found, unauthorized
+from flask import session
 from decouple import config
 from utils.token import gen_token
 from middlewares.auth import protectedRoute
 import bcrypt
 from .userDAO import UserDAO
+from utils.token import decode_token
 
 
 def is_valid_user(email: str, password: str):
@@ -28,4 +29,12 @@ def get_user(id=None, email=None) -> dict:
         return None
     except Exception as e:
         # print("From Alchemy: ", e)
+        return None
+
+
+def get_user_id():
+    try:
+        return decode_token(session.get("token")).get("user").get("_id")
+    except Exception as e:
+        print(e)
         return None
