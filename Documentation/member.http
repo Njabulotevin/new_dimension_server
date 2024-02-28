@@ -1,10 +1,10 @@
 ### Add members to a church - church Id
 
-POST http://127.0.0.1:5000/members/65de57c14455dbd5794017d8 HTTP/1.1
+POST http://127.0.0.1:5000/members/65def5ba10caff185c29a567 HTTP/1.1
 content-type: application/json
-Cookie: session=0bb37868-fc20-49d5-bcab-9a5b3d6569cf; HttpOnly; Path=/
+Cookie: session=b0cef75d-5664-428e-a826-e546d83599d2; HttpOnly; Path=/
 
-{"member": "65def18ad82cccb20f68e155"}
+{"member": "65db2b198bf35f699cec1312"}
 
 ### Get Church members - church Id
 
