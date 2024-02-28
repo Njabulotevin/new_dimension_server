@@ -125,7 +125,6 @@ class MemberDB(DB_Collection):
         member = self.collection.find_one({"user_id": user_id})
         if member:
             return Member.serialize_member(member)
-
         return None
 
     def insert_set(self, item):
@@ -135,7 +134,7 @@ class MemberDB(DB_Collection):
 
     def insert(self, item):
         try:
-            member_id = self.collection.insert_one(item)
+            member_id = self.collection.insert_one(item).inserted_id
             member = self.collection.find_one({"_id": member_id})
             return Member.serialize_member(member)
         except Exception as e:
