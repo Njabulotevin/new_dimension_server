@@ -60,3 +60,11 @@ class MemberDAO(DB_Collection):
             return Member.serialize_member(member)
         except:
             return None
+    
+    def update_member_role(self, member_id ,new_role : str):
+        try:
+            member = self.collection.update_one({"_id": ObjectId(member_id)}, {"$set": {"role" : new_role}})
+            return member.modified_count
+        except Exception as e:
+            print(e)
+            return 0

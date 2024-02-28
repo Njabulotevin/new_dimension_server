@@ -1,5 +1,5 @@
 @SERVER_URL = http://127.0.0.1:5000
-@COOKIE = 7e71ac35-b6c9-4667-99cf-2c2d134e9775;
+@COOKIE = t5-vGUa1x_P-brM77AnaQcPAbxzmExHN2DG1Tg7GOUc;
 
 
 
@@ -19,7 +19,7 @@ content-type: application/json
 Cookie: session={{COOKIE}} HttpOnly; Path=/
 
 {
-    "name": "African Immanuel Church",
+    "name": "New dimension church",
     "denomination": "Non-denominational",
     "address": {
         "street": "409 Galand Street",

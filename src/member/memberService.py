@@ -1,7 +1,7 @@
 from .memberDAO import MemberDAO
 
 
-def find_user_by_church(user_id: str, church_id, MemberDAO: MemberDAO):
+def find_member_by_church(user_id: str, church_id, MemberDAO: MemberDAO):
     try:
         member = MemberDAO.find_by_query(
             {"user_id": user_id, "church_id": church_id})
@@ -12,7 +12,7 @@ def find_user_by_church(user_id: str, church_id, MemberDAO: MemberDAO):
 
 
 def is_admin_member(user_id: str, church_id, MemberDAO: MemberDAO):
-    member = find_user_by_church(user_id, church_id, MemberDAO)
+    member = find_member_by_church(user_id, church_id, MemberDAO)
     if member:
         return True
     return False

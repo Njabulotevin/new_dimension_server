@@ -1,6 +1,6 @@
 import datetime
 from ..user.userModel import User
-
+from marshmallow import Schema, fields
 
 class Address:
     def __init__(self, street, city, province, country, postal_code):
@@ -110,3 +110,30 @@ class Church():
         Serialize list of church documents from MongoDB
         '''
         return [cls.serialize_church(church) for church in churches]
+
+
+
+class AddressSchema(Schema):
+  street = fields.Str(required=True)
+  city = fields.Str(required=True)
+  state = fields.Str(required=True)
+  country = fields.Str(required=True)
+  postal_code = fields.Str(required=True)
+
+class ContactSchema(Schema):
+  phone = fields.Str()
+  email = fields.Email(required=True)
+  website = fields.Url(required=True)
+
+class ServiceSchema(Schema):
+  day = fields.Str(required=True)
+  time = fields.Str(required=True)
+
+class ChurchSchema(Schema):
+  name = fields.Str(required=True)
+  denomination = fields.Str()
+  address = fields.Nested(AddressSchema, required=True)
+  contact = fields.Nested(ContactSchema, required=True)
+  services = fields.List(fields.Nested(ServiceSchema), required=True)
+  about = fields.Str()
+  image_url = fields.Url(required=True)

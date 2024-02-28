@@ -74,3 +74,10 @@ class ChurchDAO(DB_Collection):
         except Exception as e:
             print(e)
             return 0
+
+    def find_by_query(self, query):
+        try:
+            church = self.collection.find_one(query)
+            return Church.serialize_church(church)
+        except:
+            return None
