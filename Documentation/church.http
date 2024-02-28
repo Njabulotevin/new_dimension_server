@@ -1,5 +1,5 @@
 @SERVER_URL = http://127.0.0.1:5000
-@COOKIE = 62b38473-5875-4f17-8440-5c493f5c7574;
+@COOKIE = 7e71ac35-b6c9-4667-99cf-2c2d134e9775;
 
 
 
@@ -16,7 +16,7 @@ GET http://127.0.0.1:5000/church/65ddfb544c05a82c93084bf3 HTTP/1.1
 
 POST http://127.0.0.1:5000/church/register HTTP/1.1
 content-type: application/json
-Cookie: session=e4615944-6789-4e3a-a609-a3f9ff11d43e; HttpOnly; Path=/
+Cookie: session={{COOKIE}} HttpOnly; Path=/
 
 {
     "name": "African Immanuel Church",
