@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from user.userController import user_bp
 from church.churchController import church_bp
 from member.memberController import member_bp
@@ -32,8 +32,8 @@ Session(app)
 
 
 @app.route("/")
-def hello_world():
-    return jsonify({"hello": "world"})
+def index():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
